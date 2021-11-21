@@ -1,0 +1,22 @@
+<h1> Poker Hand Check </h1>
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-10">
+        <% if @errors.present? %>
+          Errors: <%= label_tag(@errors) %> <br /><br />
+        <% end %>
+        Result: <%= label_tag(@result) %> <br /><br />
+        <%= form_with(url: evaluate_cards_path, method: :post, scope: :cards, local: true) do |f| %>
+          <div class="from-group row">
+            <%= f.select :card1, options_for_select(@cards, @previous_selections["card1"]) %>
+            <%= f.select :card2, options_for_select(@cards, @previous_selections["card2"]) %>
+            <%= f.select :card3, options_for_select(@cards, @previous_selections["card3"]) %>
+            <%= f.select :card4, options_for_select(@cards, @previous_selections["card4"]) %>
+            <%= f.select :card5, options_for_select(@cards, @previous_selections["card5"]) %>
+            </br></br>
+            <%= f.submit "SUBMIT CARDS" %>
+          </div>
+        <% end %>
+      </div> 
+    </div>
+</div> 
