@@ -4,8 +4,10 @@
       <div class="col-10">
         <% if @errors.present? %>
           Errors: <%= label_tag(@errors) %> <br /><br />
+        <% elsif @result.present? %>
+          Result: <%= label_tag(@result) %> <br /><br />
         <% end %>
-        Result: <%= label_tag(@result) %> <br /><br />
+
         <%= form_with(url: evaluate_cards_path, method: :post, scope: :cards, local: true) do |f| %>
           <div class="from-group row">
             <%= f.select :card1, options_for_select(@cards, @previous_selections["card1"]) %>
