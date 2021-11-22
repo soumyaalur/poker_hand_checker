@@ -44,9 +44,10 @@ class Poker
 
   def n_of_kind(target_size)
     group = group_by_selected_cards_face
-    group.each do |_k, values|
+    group.each do |k, values|
       return true if target_size == values.count
     end
+    p group
     false
   end
 
