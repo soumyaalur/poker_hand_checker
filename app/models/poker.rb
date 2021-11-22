@@ -27,7 +27,7 @@ class Poker
     return 'Straight' if straight?
     return 'Three of a Kind' if n_of_kind(3)
     return 'Two pair' if two_pairs?
-    return 'one pair' if n_of_kind(1)
+    return 'one pair' if n_of_kind(2)
 
     "Highest card: #{high_card}"
   end
@@ -44,10 +44,9 @@ class Poker
 
   def n_of_kind(target_size)
     group = group_by_selected_cards_face
-    group.each do |k, values|
+    group.each do |_k, values|
       return true if target_size == values.count
     end
-    p group
     false
   end
 
@@ -96,6 +95,6 @@ class Poker
   def high_card
     return 'A' if has_ace
 
-    selected_cards.max_by { |card| Card::FACES[card.face] }
+    selected_cards.max_by { |card| Card::FACES[card.face] }.face
   end
 end
