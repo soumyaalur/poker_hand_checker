@@ -14,6 +14,5 @@ class Game
         @cards["#{face}#{suite}"] = Card.new(face, suite)
       end
     end
-    @cards["#{Card::JOKER}#{Card::JOKER}"] = Card.new(Card::JOKER, Card::JOKER)
   end
 end

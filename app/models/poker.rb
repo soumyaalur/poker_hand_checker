@@ -9,30 +9,30 @@ class Poker
     @has_ace = ace?
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
+  def evaluate
+    return 'Five of a kind' if n_of_kind?(5)
+    return 'Straight flush' if straight_flush?
+    return 'Four_of_kind' if n_of_kind?(4)
+    return 'Full house' if full_house?
+    return 'Flush' if flush?
+    return 'Straight' if straight?
+    return 'Three of a Kind' if n_of_kind?(3)
+    return 'Two pair' if two_pairs?
+    return 'One pair' if n_of_kind?(2)
+
+    "Highest card: #{high_card}"
+  end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
+
   def ace?
     selected_cards.each do |card|
       return true if card.face == 'A'
     end
     false
   end
-
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
-  def evaluate
-    return 'Five of a Kind' if n_of_kind(5)
-    return 'Straight flush' if straight_flush?
-    return 'Four of a Kind' if n_of_kind(4)
-    return 'Full house' if full_house?
-    return 'Flush' if flush?
-    return 'Straight' if straight?
-    return 'Three of a Kind' if n_of_kind(3)
-    return 'Two pair' if two_pairs?
-    return 'one pair' if n_of_kind(2)
-
-    "Highest card: #{high_card}"
-  end
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
 
   def group_by_selected_cards_face
     selected_cards.group_by(&:face)
@@ -42,12 +42,9 @@ class Poker
     selected_cards.group_by(&:suite)
   end
 
-  def n_of_kind(target_size)
+  def n_of_kind?(target_size)
     group = group_by_selected_cards_face
-    group.each do |_k, values|
-      return true if target_size == values.count
-    end
-    false
+    group.any? { |_, values| target_size == values.count }
   end
 
   def two_pairs?
@@ -56,12 +53,11 @@ class Poker
     group.each do |_k, values|
       pairs += 1 if values.count == 2
     end
-
     pairs == 2
   end
 
   def full_house?
-    n_of_kind(3) && n_of_kind(2)
+    n_of_kind?(3) && n_of_kind?(2)
   end
 
   def straight_flush?
@@ -85,16 +81,22 @@ class Poker
     cards.map { |card| Card::FACES[card.face] }
   end
 
-  def sequence?(cards)
-    sorted_cards = cards.sort
-    start = sorted_cards[0]
+  def sequence?(face_values)
+    return false if face_values.length != 5
+
+    sorted_values = face_values.sort
+    start = sorted_values[0]
     (start...start + 5).to_a
-    sorted_cards == (start...start + 5).to_a
+    sorted_values == (start...start + 5).to_a
   end
 
   def high_card
     return 'A' if has_ace
 
-    selected_cards.max_by { |card| Card::FACES[card.face] }.face
+    begin
+      selected_cards.max_by { |card| Card::FACES[card.face] }.face
+    rescue StandardError
+      nil
+    end
   end
 end
