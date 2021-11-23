@@ -6,7 +6,10 @@ describe 'Poker requests', type: :request do
   describe '#play_poker' do
     it 'returns poker form' do
       get '/'
+
       expect(response).to have_http_status(:ok)
+      expect(response.body).to_not match /Errors:/
+      expect(response.body).to_not match /Results:/
       expect(response.body).to have_form('/evaluate_cards', :post) do
         with_select('cards[card1]')
         with_select('cards[card2]')
@@ -47,6 +50,7 @@ describe 'Poker requests', type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to match /Result:/
+      expect(response.body).to match /Rank: 2/
       expect(response.body).to_not match /Errors:/
       expect(response.body).to match /Straight flush/
       expect(response.body).to have_form('/evaluate_cards', :post) do
@@ -64,6 +68,7 @@ describe 'Poker requests', type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to_not match /Result:/
+      expect(response.body).to_not match /Rank:/
       expect(response.body).to match /Errors:/
       expect(response.body).to match /Duplicate card ac/
       expect(response.body).to have_form('/evaluate_cards', :post) do

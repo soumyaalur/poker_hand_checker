@@ -12,17 +12,17 @@ class Poker
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def evaluate
-    return 'Five of a kind' if n_of_kind?(5)
-    return 'Straight flush' if straight_flush?
-    return 'Four_of_kind' if n_of_kind?(4)
-    return 'Full house' if full_house?
-    return 'Flush' if flush?
-    return 'Straight' if straight?
-    return 'Three of a Kind' if n_of_kind?(3)
-    return 'Two pair' if two_pairs?
-    return 'One pair' if n_of_kind?(2)
+    return {label: 'Five of a kind', rank: 1} if n_of_kind?(5)
+    return {label: 'Straight flush', rank: 2} if straight_flush?
+    return {label: 'Four_of_kind', rank: 3} if n_of_kind?(4)
+    return {label: 'Full house', rank: 4} if full_house?
+    return {label: 'Flush', rank: 5} if flush?
+    return {label: 'Straight', rank: 6} if straight?
+    return {label: 'Three of a Kind', rank: 7} if n_of_kind?(3)
+    return {label: 'Two pair', rank: 8} if two_pairs?
+    return {label: 'One pair', rank: 9} if n_of_kind?(2)
 
-    "Highest card: #{high_card}"
+    {label: "Highest card: #{high_card}", rank: 10}
   end
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity

@@ -393,50 +393,94 @@ describe Poker do
         Card.new('2', 'D')
       ]
     end
+    let(:high_card) do
+      [
+        Card.new('K', 'C'),
+        Card.new('5', 'D'),
+        Card.new('Q', 'S'),
+        Card.new('A', 'H'),
+        Card.new('2', 'D')
+      ]
+    end
 
     it 'returns five of a kind when all cards have same face' do
       poker = Poker.new(five_of_kind)
-      expect(poker.evaluate).to eq('Five of a kind')
+      
+      result = poker.evaluate
+      expect(result[:label]).to eq('Five of a kind')
+      expect(result[:rank]).to eq(1)
     end
 
     it 'returns true if cards are straight? and flush?' do
       poker = Poker.new(straight_flush)
-      expect(poker.evaluate).to eq('Straight flush')
+
+      result = poker.evaluate
+      expect(result[:label]).to eq('Straight flush')
+      expect(result[:rank]).to eq(2)
     end
 
     it 'returns true if four cards have same face' do
       poker = Poker.new(four_of_kind)
-      expect(poker.evaluate).to eq('Four_of_kind')
+
+      result = poker.evaluate
+      expect(result[:label]).to eq('Four_of_kind')
+      expect(result[:rank]).to eq(3)
     end
 
     it 'returns true if three cards have same face and two cards have same face' do
       poker = Poker.new(full_house)
-      expect(poker.evaluate).to eq('Full house')
+
+      result = poker.evaluate
+      expect(result[:label]).to eq('Full house')
+      expect(result[:rank]).to eq(4)
     end
 
     it 'returns true if all cards have same suit' do
       poker = Poker.new(flush)
-      expect(poker.evaluate).to eq('Flush')
+
+      result = poker.evaluate
+      expect(result[:label]).to eq('Flush')
+      expect(result[:rank]).to eq(5)
     end
 
     it 'returns true if all cards have sequential face ' do
       poker = Poker.new(staright)
-      expect(poker.evaluate).to eq('Straight')
+
+      result = poker.evaluate
+      expect(result[:label]).to eq('Straight')
+      expect(result[:rank]).to eq(6)
     end
 
     it 'returns true if three cards have same face' do
       poker = Poker.new(three_of_kind)
-      expect(poker.evaluate).to eq('Three of a Kind')
+
+      result = poker.evaluate
+      expect(result[:label]).to eq('Three of a Kind')
+      expect(result[:rank]).to eq(7)
     end
 
     it 'returns true if there are two pairs' do
       poker = Poker.new(two_pairs)
-      expect(poker.evaluate).to eq('Two pair')
+
+      result = poker.evaluate
+      expect(result[:label]).to eq('Two pair')
+      expect(result[:rank]).to eq(8)
     end
 
     it 'returns true if there is one pair' do
       poker = Poker.new(one_pair)
-      expect(poker.evaluate).to eq('One pair')
+
+      result = poker.evaluate
+      expect(result[:label]).to eq('One pair')
+      expect(result[:rank]).to eq(9)
+    end
+
+    it 'returns high card if there no matches' do
+      poker = Poker.new(high_card)
+
+      result = poker.evaluate
+      expect(result[:label]).to eq('Highest card: A')
+      expect(result[:rank]).to eq(10)
     end
   end
 end

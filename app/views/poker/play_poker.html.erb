@@ -5,7 +5,8 @@
         <% if @errors.present? %>
           Errors: <%= label_tag(@errors) %> <br /><br />
         <% elsif @result.present? %>
-          Result: <%= label_tag(@result) %> <br /><br />
+          Result: <%= label_tag(@result[:label]) %> <br /><br />
+          Rank: <%= @result[:rank] %> <br /><br />
         <% end %>
 
         <%= form_with(url: evaluate_cards_path, method: :post, scope: :cards, local: true) do |f| %>
