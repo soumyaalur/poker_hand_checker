@@ -1,24 +1,23 @@
-# README
+# Poker Hand Checker
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+**System dependencies**
 
-Things you may want to cover:
+- Ruby 3.0.2
+- Ruby on Rails 6.1.4.1
+- Rspec 5.0.0
+- rubocop-rails
+- Yarn 1.22.17
+- Bundler 2.2.31
 
-* Ruby version
+Instructions to run locally
 
-* System dependencies
+```
+cd <PROJECT LOCATION>
+rails server
+```
+Instructions to run Tests
+```
+Rspec spec
+```
+Access the website at: <http://localhost:3000>
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
