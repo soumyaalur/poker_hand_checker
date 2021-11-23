@@ -18,10 +18,11 @@ class Player
 
   private
 
+  # rubocop:disable Metrics/AbcSize
   def validate_cards
     errors = []
-    errors << "More than five cards" if player_cards.length > 5
-    
+    errors << 'More than five cards' if player_cards.length > 5
+
     player_cards.each do |card_value|
       errors << "Invalid card #{card_value}" and next unless @game.cards.key?(card_value)
       errors << "Duplicate card #{card_value}" and next if @game.cards[card_value].nil?
@@ -31,4 +32,5 @@ class Player
     end
     errors
   end
+  # rubocop:enable Metrics/AbcSize
 end
